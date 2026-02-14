@@ -17,7 +17,6 @@ body {
   font-family: 'Cormorant Garamond', serif;
   display: flex;
   justify-content: center;
-  position: relative;
 }
 
 .main-container {
@@ -89,20 +88,6 @@ body {
 .greyish     { color: #6b6b6b; }    
 .red-grey    { color: #a83232; }    
 
-/* Background "I like" style for mobile */
-.mobile-ilike {
-  position: fixed;
-  font-family: 'Great Vibes', cursive;
-  font-size: 48px;
-  color: #ff4d00;
-  opacity: 0.15;
-  pointer-events: none;
-  z-index: 0;
-  user-select: none;
-  white-space: nowrap;
-  transform: rotate(-15deg);
-}
-
 /* --------------------------- */
 /* MOBILE RESPONSIVE STYLES */
 @media (max-width: 768px) {
@@ -125,14 +110,14 @@ body {
   /* Merge all columns into a single column on mobile */
   .column {
     max-width: 90%;
-    text-align: justify; /* justify text */
-    margin: 0 auto;      /* center column */
+    text-align: justify; /* justified text */
+    margin: 0 auto;      /* center the column */
   }
 
-  /* Show all columns for merging in JS */
+  /* Show only one column and merge all words */
   #leftCol1, #leftCol2, #leftCol3,
   #rightCol1, #rightCol2, #rightCol3 {
-    display: block;
+    display: block; /* keep all columns visible but will merge in JS */
   }
 }
 </style>
@@ -222,17 +207,15 @@ words.forEach((word, index) => {
   else rightCols[colIndex - 3].appendChild(div);
 });
 
-// ----------------------
-// Mobile merge and background "I like"
-// ----------------------
-function setupMobile() {
+// Merge all columns into one on mobile
+function mergeColumnsMobile() {
   if (window.innerWidth <= 768) {
-    // Merge all columns into one
     const mergedColumn = document.createElement('div');
     mergedColumn.className = "column";
     mergedColumn.style.textAlign = "justify";
-
-    [...leftCols, ...rightCols].forEach(col => {
+    
+    const allColumns = [...leftCols, ...rightCols];
+    allColumns.forEach(col => {
       while (col.firstChild) {
         mergedColumn.appendChild(col.firstChild);
       }
@@ -240,32 +223,15 @@ function setupMobile() {
     });
 
     document.querySelector('.main-container').appendChild(mergedColumn);
-
-    // Add random "I like" background texts
-    const body = document.body;
-    const totalIlikes = 5; // appear rarely
-    for (let i = 0; i < totalIlikes; i++) {
-      const ilike = document.createElement('div');
-      ilike.className = 'mobile-ilike';
-      ilike.textContent = 'I like';
-
-      // Random position
-      ilike.style.top = Math.random() * 2000 + 'px'; // random vertical
-      ilike.style.left = Math.random() * 80 + 'vw';   // random horizontal
-      ilike.style.fontSize = (30 + Math.random() * 50) + 'px';
-      ilike.style.opacity = 0.1 + Math.random() * 0.1;
-
-      body.appendChild(ilike);
-    }
   }
 }
 
 // Run on load
-setupMobile();
+mergeColumnsMobile();
 
-// Re-run on resize
+// Run on resize
 window.addEventListener('resize', () => {
-  location.reload();
+  location.reload(); // simple way to re-run merge on resize
 });
 </script>
 
