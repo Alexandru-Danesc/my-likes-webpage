@@ -79,3 +79,47 @@ for (let row = 0; row < clustersDown; row++) {
 
     // 10 HORIZONTAL
     for (let i = 0; i < 10; i++) {
+      if (wordIndex >= words.length) break;
+
+      placeWord(
+        words[wordIndex++],
+        baseX + 10,
+        baseY + i * 35,
+        0,
+        22 + Math.random() * 8
+      );
+    }
+
+    // 10 VERTICAL
+    for (let i = 0; i < 10; i++) {
+      if (wordIndex >= words.length) break;
+
+      placeWord(
+        words[wordIndex++],
+        baseX + 300 + i * 25,
+        baseY + 20,
+        90,
+        22 + Math.random() * 8
+      );
+    }
+
+    // 10 INCLINED (kept in separate safe area so no overlap)
+    for (let i = 0; i < 10; i++) {
+      if (wordIndex >= words.length) break;
+
+      placeWord(
+        words[wordIndex++],
+        baseX + 120 + i * 20,
+        baseY + 400 + i * 25,
+        Math.random() * 50 - 25,
+        24 + Math.random() * 12
+      );
+    }
+
+  }
+}
+
+</script>
+
+</body>
+</html>
