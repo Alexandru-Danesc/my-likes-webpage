@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Likes</title>
+<title>My Passions</title>
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
@@ -14,7 +14,7 @@ body {
   margin: 0;
   padding: 40px;
   background: white;
-  font-family: 'Cormorant Garamond', serif; /* Elegant, classical font for columns */
+  font-family: 'Cormorant Garamond', serif; /* Elegant font for words */
   display: flex;
   justify-content: center;
 }
@@ -32,8 +32,8 @@ body {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 600px;
-  height: 600px;
+  width: 300px;  /* half the previous size */
+  height: 300px; /* half the previous size */
   background: white;
   transform: translate(-50%, -50%);
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
@@ -46,28 +46,36 @@ body {
 
 .square h1 {
   font-family: 'Great Vibes', cursive;
-  font-size: 64px;
+  font-size: 48px; /* adjusted for smaller square */
   color: #ff4d00;
   margin: 0;
 }
 
-/* Columns container */
-.columns {
+/* Left and right columns */
+.columns-container {
   display: flex;
-  flex-direction: column;
-  gap: 8px; /* vertical spacing between words */
+  flex: 1;
+  justify-content: space-between;
 }
 
-/* Reserve space around square: 310px (half of 600px) plus extra gap */
-.left-section, .right-section {
+/* Column group (left or right) */
+.column-group {
   display: flex;
   flex-direction: column;
-  flex: 1;
+  gap: 8px;
+}
+
+/* Individual column */
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
 }
 
 /* Word style */
 .word {
-  font-size: 24px;
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 22px;
 }
 
 /* Colors */
@@ -81,17 +89,24 @@ body {
 <body>
 
 <div class="main-container">
-  <!-- Left columns -->
-  <div class="left-section" style="margin-right: 320px;">
-    <div class="columns" id="leftCol1"></div>
-    <div class="columns" id="leftCol2"></div>
+
+  <!-- Columns container -->
+  <div class="columns-container">
+    
+    <!-- Left columns -->
+    <div class="column-group" style="margin-right: 170px;"> <!-- half square width + gap -->
+      <div class="column" id="leftCol1"></div>
+      <div class="column" id="leftCol2"></div>
+    </div>
+
+    <!-- Right columns -->
+    <div class="column-group" style="margin-left: 170px;"> <!-- half square width + gap -->
+      <div class="column" id="rightCol1"></div>
+      <div class="column" id="rightCol2"></div>
+    </div>
+
   </div>
 
-  <!-- Right columns -->
-  <div class="right-section" style="margin-left: 320px;">
-    <div class="columns" id="rightCol1"></div>
-    <div class="columns" id="rightCol2"></div>
-  </div>
 </div>
 
 <!-- Fixed center square -->
@@ -124,7 +139,7 @@ const words = [
 "Minimalism","Volunteering","Mentoring","Problem Solving","Creativity"
 ];
 
-// Colors
+// Colors array
 const colors = ["orange-grey","green-grey","blue-grey","greyish","red-grey"];
 
 // Get column elements
@@ -136,10 +151,11 @@ words.forEach((word, index) => {
   const div = document.createElement('div');
   div.className = "word";
   div.textContent = word;
+
   // Random color
   div.classList.add(colors[Math.floor(Math.random() * colors.length)]);
-  
-  // Alternate columns
+
+  // Alternate placing words in columns: 0,1 -> left; 2,3 -> right
   if (index % 4 === 0) leftCols[0].appendChild(div);
   else if (index % 4 === 1) leftCols[1].appendChild(div);
   else if (index % 4 === 2) rightCols[0].appendChild(div);
