@@ -3,92 +3,96 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title> My Likes</title>
+<title>My Passions</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+<!-- Splashy fun font -->
+<link href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@600;800&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
-  padding: 40px;
-  font-family: 'Nunito', sans-serif;
-  background: linear-gradient(135deg, #fdfbfb, #ebedee);
-  display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(140px, 1fr));
-  gap: 35px;
+  background: white;
+  font-family: 'Baloo 2', cursive;
+  position: relative;
+  height: 3000px; /* makes page scrollable */
 }
 
 .word {
-  font-size: 18px;
-  font-weight: 700;
-  color: #333;
-  text-align: center;
-}
-
-.vertical {
-  writing-mode: vertical-rl;
-  transform: rotate(180deg);
-}
-
-.diagonal {
-  transform: rotate(45deg);
+  position: absolute;
+  color: #ff6a00;
+  font-weight: 800;
+  font-size: 22px;
+  white-space: nowrap;
+  user-select: none;
 }
 </style>
 </head>
-
 <body>
 
 <script>
 
+// 120+ UNIQUE words
 const words = [
-
-/* Technology */
-"Coding","Programming","Web Development","App Development","AI","Machine Learning",
-"Robotics","Cybersecurity","Data Science","Blockchain","UI Design","UX Design",
-"Game Development","Cloud Computing","Automation","Electronics","3D Printing",
-"Virtual Reality","Augmented Reality","Open Source","Startups","Entrepreneurship",
-
-/* Creative */
-"Art","Drawing","Sketching","Painting","Digital Art","Photography",
-"Filmmaking","Video Editing","Graphic Design","Animation","Creative Writing",
-"Poetry","Storytelling","Music Production","Beat Making","Piano",
-"Guitar","Singing","Fashion Design","Interior Design",
-
-/* Intellectual */
-"Reading","Philosophy","Psychology","Astronomy","Physics","Mathematics",
-"History","Economics","Political Science","Linguistics","Neuroscience",
-"Critical Thinking","Public Speaking","Debating","Research","Learning",
-"Teaching","Mentoring","Languages","Cultural Studies",
-
-/* Active */
-"Fitness","Running","Swimming","Cycling","Hiking","Climbing",
-"Basketball","Football","Tennis","Yoga","Meditation",
-"Martial Arts","Skateboarding","Surfing","Skiing","Dancing",
-"Traveling","Exploring","Camping","Adventure",
-
-/* Lifestyle */
-"Cooking","Baking","Nutrition","Gardening","DIY Projects",
-"Minimalism","Sustainability","Volunteering","Blogging",
-"Podcasting","Journaling","Self Improvement","Mindfulness",
-"Networking","Leadership","Productivity","Innovation",
-"Strategy","Problem Solving","Creativity"
-
+"Coding","Programming","Design","Art","Photography","Travel","Adventure",
+"Creativity","Innovation","Technology","AI","Robotics","Cybersecurity",
+"Data","Startups","Entrepreneurship","Web","Apps","Games","Animation",
+"Music","Piano","Guitar","Singing","Poetry","Writing","Storytelling",
+"Reading","Philosophy","Psychology","Astronomy","Science","Physics",
+"Mathematics","History","Culture","Languages","Fitness","Running",
+"Swimming","Cycling","Hiking","Climbing","Yoga","Meditation",
+"Basketball","Football","Tennis","Cooking","Baking","Nutrition",
+"Gardening","DIY","Blogging","Podcasting","Learning","Teaching",
+"Leadership","Strategy","Exploring","Camping","Surfing","Skateboarding",
+"Filmmaking","Editing","Drawing","Sketching","Painting","Digital Art",
+"UI","UX","Cloud","Blockchain","Automation","Electronics",
+"3D Printing","Virtual Reality","Augmented Reality","Open Source",
+"Networking","Public Speaking","Research","Critical Thinking",
+"Debating","Problem Solving","Innovation","Sustainability",
+"Minimalism","Mindfulness","Journaling","Self Growth",
+"Mentoring","Volunteering","Culture","Neuroscience",
+"Economics","Political Science","Linguistics",
+"Dancing","Martial Arts","Skiing","Traveling",
+"Space","Nature","Wildlife","Ocean","Mountains",
+"Exploration","Discovery","Future","Vision","Dreaming",
+"Building","Creating","Inventing","Designing","Imagining"
 ];
 
-const orientations = ["normal", "vertical", "diagonal"];
+// Random angle generator
+function randomAngle() {
+  return Math.floor(Math.random() * 360);
+}
 
-words.forEach(word => {
-  const div = document.createElement("div");
-  div.className = "word";
+// Create artistic bunches
+const zones = 15; // number of artistic clusters
 
-  const randomOrientation = orientations[Math.floor(Math.random() * orientations.length)];
-  if (randomOrientation !== "normal") {
-    div.classList.add(randomOrientation);
-  }
+for (let i = 0; i < words.length; i++) {
 
-  div.textContent = word;
-  document.body.appendChild(div);
-});
+  const span = document.createElement("span");
+  span.className = "word";
+  span.textContent = words[i];
+
+  // choose random zone
+  const zoneWidth = window.innerWidth / 3;
+  const zoneHeight = 3000 / 5;
+
+  const randomZoneX = Math.floor(Math.random() * 3);
+  const randomZoneY = Math.floor(Math.random() * 5);
+
+  const baseX = randomZoneX * zoneWidth;
+  const baseY = randomZoneY * zoneHeight;
+
+  // scatter inside zone
+  const offsetX = Math.random() * zoneWidth * 0.8;
+  const offsetY = Math.random() * zoneHeight * 0.8;
+
+  span.style.left = (baseX + offsetX) + "px";
+  span.style.top = (baseY + offsetY) + "px";
+
+  span.style.transform = "rotate(" + randomAngle() + "deg)";
+  span.style.fontSize = (18 + Math.random() * 18) + "px";
+
+  document.body.appendChild(span);
+}
 
 </script>
 
