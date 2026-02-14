@@ -14,7 +14,7 @@ body {
   margin: 0;
   padding: 40px;
   background: white;
-  font-family: 'Cormorant Garamond', serif; /* Elegant font for words */
+  font-family: 'Cormorant Garamond', serif;
   display: flex;
   justify-content: center;
 }
@@ -23,6 +23,7 @@ body {
   display: flex;
   width: 100%;
   max-width: 1400px;
+  justify-content: center;
   position: relative;
   gap: 40px;
 }
@@ -32,8 +33,8 @@ body {
   position: fixed;
   top: 50%;
   left: 50%;
-  width: 300px;  /* half the previous size */
-  height: 300px; /* half the previous size */
+  width: 300px;
+  height: 300px;
   background: white;
   transform: translate(-50%, -50%);
   box-shadow: 0 0 20px rgba(0,0,0,0.1);
@@ -46,30 +47,22 @@ body {
 
 .square h1 {
   font-family: 'Great Vibes', cursive;
-  font-size: 48px; /* adjusted for smaller square */
+  font-size: 48px;
   color: #ff4d00;
   margin: 0;
 }
 
-/* Left and right columns */
-.columns-container {
-  display: flex;
-  flex: 1;
-  justify-content: space-between;
-}
-
-/* Column group (left or right) */
-.column-group {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+/* Side container with 2 columns */
+.side-container {
+  display: flex;          /* row direction for 2 columns */
+  gap: 20px;              /* gap between the two columns */
 }
 
 /* Individual column */
 .column {
   display: flex;
   flex-direction: column;
-  gap: 8px;
+  gap: 8px;  /* vertical spacing between words */
 }
 
 /* Word style */
@@ -90,21 +83,16 @@ body {
 
 <div class="main-container">
 
-  <!-- Columns container -->
-  <div class="columns-container">
-    
-    <!-- Left columns -->
-    <div class="column-group" style="margin-right: 170px;"> <!-- half square width + gap -->
-      <div class="column" id="leftCol1"></div>
-      <div class="column" id="leftCol2"></div>
-    </div>
+  <!-- Left side: two columns -->
+  <div class="side-container" style="margin-right: 170px;"> <!-- space to avoid square -->
+    <div class="column" id="leftCol1"></div>
+    <div class="column" id="leftCol2"></div>
+  </div>
 
-    <!-- Right columns -->
-    <div class="column-group" style="margin-left: 170px;"> <!-- half square width + gap -->
-      <div class="column" id="rightCol1"></div>
-      <div class="column" id="rightCol2"></div>
-    </div>
-
+  <!-- Right side: two columns -->
+  <div class="side-container" style="margin-left: 170px;"> <!-- space to avoid square -->
+    <div class="column" id="rightCol1"></div>
+    <div class="column" id="rightCol2"></div>
   </div>
 
 </div>
@@ -146,7 +134,7 @@ const colors = ["orange-grey","green-grey","blue-grey","greyish","red-grey"];
 const leftCols = [document.getElementById('leftCol1'), document.getElementById('leftCol2')];
 const rightCols = [document.getElementById('rightCol1'), document.getElementById('rightCol2')];
 
-// Distribute words evenly
+// Distribute words evenly into 4 columns
 words.forEach((word, index) => {
   const div = document.createElement('div');
   div.className = "word";
@@ -155,7 +143,7 @@ words.forEach((word, index) => {
   // Random color
   div.classList.add(colors[Math.floor(Math.random() * colors.length)]);
 
-  // Alternate placing words in columns: 0,1 -> left; 2,3 -> right
+  // Alternate columns: 0,1 = left; 2,3 = right
   if (index % 4 === 0) leftCols[0].appendChild(div);
   else if (index % 4 === 1) leftCols[1].appendChild(div);
   else if (index % 4 === 2) rightCols[0].appendChild(div);
