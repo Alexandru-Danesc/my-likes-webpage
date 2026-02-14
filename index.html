@@ -55,7 +55,7 @@ body {
 /* Side container for multiple columns */
 .side-container {
   display: flex;
-  gap: 20px; /* gap between columns */
+  gap: 20px;
 }
 
 /* Right side aligned right */
@@ -67,8 +67,12 @@ body {
 .column {
   display: flex;
   flex-direction: column;
-  gap: 8px;
-  max-width: 200px;
+  gap: 8px; /* vertical spacing */
+}
+
+/* Align text in right columns to right */
+.right-column {
+  text-align: right;
 }
 
 /* Word style */
@@ -100,16 +104,12 @@ body {
   .side-container {
     flex-direction: column;
     gap: 0;
+    align-items: center; /* center the columns horizontally */
   }
 
   .column {
     max-width: 100%;
-  }
-
-  /* Merge all columns into a single column visually */
-  #leftCol1, #leftCol2, #leftCol3,
-  #rightCol1, #rightCol2, #rightCol3 {
-    width: 100%;
+    text-align: center; /* center text on mobile */
   }
 }
 </style>
@@ -127,9 +127,9 @@ body {
 
   <!-- Right side: 3 columns -->
   <div class="side-container right-side" style="margin-left: 170px;">
-    <div class="column" id="rightCol1"></div>
-    <div class="column" id="rightCol2"></div>
-    <div class="column" id="rightCol3"></div>
+    <div class="column right-column" id="rightCol1"></div>
+    <div class="column right-column" id="rightCol2"></div>
+    <div class="column right-column" id="rightCol3"></div>
   </div>
 
 </div>
