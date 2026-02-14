@@ -70,7 +70,7 @@ body {
   gap: 8px; /* vertical spacing */
 }
 
-/* Align text in right columns to right */
+/* Right columns text aligned right */
 .right-column {
   text-align: right;
 }
@@ -97,26 +97,27 @@ body {
   
   .main-container {
     flex-direction: column;
-    gap: 20px;
     align-items: center;
+    gap: 20px;
   }
 
   .side-container {
     flex-direction: column;
     gap: 0;
-    align-items: center; /* center the container horizontally */
+    align-items: center;
   }
 
-  /* Merge all columns into one on mobile */
+  /* Merge all columns into a single column on mobile */
   .column {
-    max-width: 90%;      /* responsive width */
-    text-align: justify;  /* justify the text */
-    margin: 0 auto;       /* center column */
+    max-width: 90%;
+    text-align: justify; /* justified text */
+    margin: 0 auto;      /* center the column */
   }
 
-  /* Hide individual spacing between columns */
-  #leftCol2, #leftCol3, #rightCol1, #rightCol2, #rightCol3 {
-    display: none; /* only first column visible */
+  /* Show only one column and merge all words */
+  #leftCol1, #leftCol2, #leftCol3,
+  #rightCol1, #rightCol2, #rightCol3 {
+    display: block; /* keep all columns visible but will merge in JS */
   }
 }
 </style>
@@ -147,7 +148,7 @@ body {
 </div>
 
 <script>
-// Expanded words array
+// Words array
 const words = [
 "Coding","Programming","Web Development","App Development","Software Engineering",
 "Artificial Intelligence","Machine Learning","Robotics","Cybersecurity","Data Science",
@@ -204,6 +205,33 @@ words.forEach((word, index) => {
   const colIndex = index % 6;
   if (colIndex < 3) leftCols[colIndex].appendChild(div);
   else rightCols[colIndex - 3].appendChild(div);
+});
+
+// Merge all columns into one on mobile
+function mergeColumnsMobile() {
+  if (window.innerWidth <= 768) {
+    const mergedColumn = document.createElement('div');
+    mergedColumn.className = "column";
+    mergedColumn.style.textAlign = "justify";
+    
+    const allColumns = [...leftCols, ...rightCols];
+    allColumns.forEach(col => {
+      while (col.firstChild) {
+        mergedColumn.appendChild(col.firstChild);
+      }
+      col.style.display = 'none';
+    });
+
+    document.querySelector('.main-container').appendChild(mergedColumn);
+  }
+}
+
+// Run on load
+mergeColumnsMobile();
+
+// Run on resize
+window.addEventListener('resize', () => {
+  location.reload(); // simple way to re-run merge on resize
 });
 </script>
 
