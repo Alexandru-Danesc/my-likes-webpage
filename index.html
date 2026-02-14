@@ -104,12 +104,19 @@ body {
   .side-container {
     flex-direction: column;
     gap: 0;
-    align-items: center; /* center the columns horizontally */
+    align-items: center; /* center the container horizontally */
   }
 
+  /* Merge all columns into one on mobile */
   .column {
-    max-width: 100%;
-    text-align: center; /* center text on mobile */
+    max-width: 90%;      /* responsive width */
+    text-align: justify;  /* justify the text */
+    margin: 0 auto;       /* center column */
+  }
+
+  /* Hide individual spacing between columns */
+  #leftCol2, #leftCol3, #rightCol1, #rightCol2, #rightCol3 {
+    display: none; /* only first column visible */
   }
 }
 </style>
