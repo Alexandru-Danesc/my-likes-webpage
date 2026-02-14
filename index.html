@@ -5,21 +5,20 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Passions</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
   background: white;
-  font-family: 'Fredoka', cursive;
+  font-family: 'Luckiest Guy', cursive;
   position: relative;
-  height: 4000px;
+  height: 4500px;
 }
 
 .word {
   position: absolute;
-  color: #ff5e00;
-  font-weight: 700;
+  color: #ff4d00;
   white-space: nowrap;
   user-select: none;
 }
@@ -29,6 +28,7 @@ body {
 
 <script>
 
+// Large unique word collection
 const words = [
 "Coding","Programming","Design","Art","Photography","Travel","Adventure",
 "Creativity","Innovation","Technology","AI","Robotics","Cybersecurity",
@@ -53,10 +53,12 @@ const words = [
 ];
 
 let wordIndex = 0;
-const zonesAcross = 3;
-const zonesDown = 6;
-const zoneWidth = window.innerWidth / zonesAcross;
-const zoneHeight = 600;
+
+const clustersAcross = 3;
+const clustersDown = 6;
+
+const clusterWidth = window.innerWidth / clustersAcross;
+const clusterHeight = 650; // tight vertical stacking
 
 function placeWord(text, x, y, rotation, size) {
   const span = document.createElement("span");
@@ -69,52 +71,11 @@ function placeWord(text, x, y, rotation, size) {
   document.body.appendChild(span);
 }
 
-for (let row = 0; row < zonesDown; row++) {
-  for (let col = 0; col < zonesAcross; col++) {
+for (let row = 0; row < clustersDown; row++) {
+  for (let col = 0; col < clustersAcross; col++) {
 
-    let baseX = col * zoneWidth + 40;
-    let baseY = row * zoneHeight + 40;
+    let baseX = col * clusterWidth + 20;
+    let baseY = row * clusterHeight + 20;
 
-    // 5 Horizontal words
-    for (let i = 0; i < 5; i++) {
-      if (wordIndex >= words.length) break;
-      placeWord(
-        words[wordIndex++],
-        baseX + (i * 20),
-        baseY + (i * 45),
-        0,
-        20 + Math.random() * 15
-      );
-    }
-
-    // 5 Vertical words
-    for (let i = 0; i < 5; i++) {
-      if (wordIndex >= words.length) break;
-      placeWord(
-        words[wordIndex++],
-        baseX + 180 + (i * 30),
-        baseY + (i * 35),
-        90,
-        20 + Math.random() * 15
-      );
-    }
-
-    // Extra random angled words for artistic feel
-    for (let i = 0; i < 3; i++) {
-      if (wordIndex >= words.length) break;
-      placeWord(
-        words[wordIndex++],
-        baseX + Math.random() * (zoneWidth - 200),
-        baseY + Math.random() * (zoneHeight - 150),
-        Math.random() * 60 - 30,
-        22 + Math.random() * 18
-      );
-    }
-
-  }
-}
-
-</script>
-
-</body>
-</html>
+    // 10 HORIZONTAL
+    for (let i = 0; i < 10; i++) {
