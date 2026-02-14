@@ -5,12 +5,13 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Passions</title>
 
+<!-- Splashy fun font -->
 <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
-  padding: 60px;
+  padding: 40px;
   background: white;
   font-family: 'Luckiest Guy', cursive;
 }
@@ -18,14 +19,19 @@ body {
 .container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 35px 20px;
+  gap: 15px 20px; /* smaller vertical gap */
 }
 
 .word {
-  color: #ff4d00;
-  font-size: 24px;
-  text-align: center;
+  font-size: 22px;
+  text-align: left; /* align words to left */
 }
+
+/* Color classes */
+.orange-grey { color: #d97742; }   /* muted orange */
+.green-grey { color: #4f7942; }    /* muted green */
+.blue-grey  { color: #607d8b; }    /* blue-grey */
+.greyish    { color: #6b6b6b; }    /* neutral grey */
 </style>
 </head>
 <body>
@@ -56,11 +62,19 @@ const words = [
 "Minimalism","Volunteering","Mentoring","Problem Solving","Creativity"
 ];
 
+// Color options
+const colors = ["orange-grey","green-grey","blue-grey","greyish"];
+
 const container = document.getElementById("container");
 
 words.forEach(word => {
   const div = document.createElement("div");
   div.className = "word";
+
+  // Random color class
+  const colorClass = colors[Math.floor(Math.random() * colors.length)];
+  div.classList.add(colorClass);
+
   div.textContent = word;
   container.appendChild(div);
 });
