@@ -88,6 +88,16 @@ body {
 .greyish     { color: #6b6b6b; }    
 .red-grey    { color: #a83232; }    
 
+/* Mobile-only "I like" title above column */
+.mobile-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: 48px;
+  color: #ff4d00;
+  text-align: center;
+  margin-bottom: 20px;
+  display: none; /* hidden by default */
+}
+
 /* --------------------------- */
 /* MOBILE RESPONSIVE STYLES */
 @media (max-width: 768px) {
@@ -114,28 +124,17 @@ body {
     margin: 0 auto;      /* center the column */
   }
 
-  /* Show only one column and merge all words */
+  /* Show mobile title */
+  .mobile-title {
+    display: block;
+  }
+
+  /* Show all columns for merging in JS */
   #leftCol1, #leftCol2, #leftCol3,
   #rightCol1, #rightCol2, #rightCol3 {
-    display: block; /* keep all columns visible but will merge in JS */
-  }
-    /* Mobile-only "I like" title above column */
-.mobile-title {
-  font-family: 'Great Vibes', cursive;
-  font-size: 48px;
-  color: #ff4d00;
-  text-align: center;
-  margin-bottom: 20px;
-  display: none; /* hidden by default */
-}
-
-@media (max-width: 768px) {
-  .mobile-title {
-    display: block; /* show on mobile */
+    display: block;
   }
 }
-}
-
 </style>
 </head>
 <body>
@@ -223,9 +222,18 @@ words.forEach((word, index) => {
   else rightCols[colIndex - 3].appendChild(div);
 });
 
-// Merge all columns into one on mobile
+// Merge all columns into one on mobile and add mobile title
 function mergeColumnsMobile() {
   if (window.innerWidth <= 768) {
+    const mainContainer = document.querySelector('.main-container');
+
+    // Mobile title
+    const mobileTitle = document.createElement('div');
+    mobileTitle.className = 'mobile-title';
+    mobileTitle.textContent = 'I like';
+    mainContainer.appendChild(mobileTitle);
+
+    // Merged column
     const mergedColumn = document.createElement('div');
     mergedColumn.className = "column";
     mergedColumn.style.textAlign = "justify";
@@ -238,7 +246,7 @@ function mergeColumnsMobile() {
       col.style.display = 'none';
     });
 
-    document.querySelector('.main-container').appendChild(mergedColumn);
+    mainContainer.appendChild(mergedColumn);
   }
 }
 
