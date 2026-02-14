@@ -1,26 +1,28 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>My Hobbies & Passions</title>
 
-  <!-- Google Font (Rounded & Modern) -->
-  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+  <!-- Rounded Google Font -->
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
 
   <style>
     body {
       margin: 0;
+      padding: 0;
       height: 100vh;
+      background: linear-gradient(135deg, #f5f7fa, #c3cfe2);
+      font-family: 'Nunito', sans-serif;
       overflow: hidden;
-      background: linear-gradient(135deg, #f8f9fa, #e0f7fa);
-      font-family: 'Poppins', sans-serif;
       position: relative;
     }
 
     .word {
       position: absolute;
-      font-size: 20px;
-      font-weight: 500;
+      font-size: 18px;
+      font-weight: 600;
       color: #333;
       white-space: nowrap;
       user-select: none;
@@ -34,46 +36,42 @@
 <body>
 
 <script>
-const hobbies = [
-  "Coding","Design","Music","Art","Photography","Travel",
-  "Gaming","Reading","Writing","Technology","Innovation",
-  "Nature","Fitness","Movies","Creativity","Science",
-  "Astronomy","Cooking","Learning","Exploring","Adventure",
-  "Swimming","Basketball","Cycling","Hiking","Robotics",
-  "AI","Startups","Entrepreneurship","Sketching","Poetry",
-  "Blogging","Volunteering","History","Psychology",
-  "Meditation","Philosophy","Drawing","Animation",
-  "Programming","Web Development","UI/UX","Chess",
-  "Piano","Guitar","Fitness","Health","Running",
-  "Traveling","Culture","Languages","Space","DIY"
-];
+document.addEventListener("DOMContentLoaded", function () {
 
-// Duplicate words to reach hundreds
-for (let i = 0; i < 10; i++) {
-  hobbies.push(...hobbies);
-}
+  const baseWords = [
+    "Coding","Design","Music","Art","Photography","Travel",
+    "Gaming","Reading","Writing","Technology","Innovation",
+    "Nature","Fitness","Movies","Creativity","Science",
+    "Astronomy","Cooking","Learning","Exploring","Adventure",
+    "Swimming","Basketball","Cycling","Hiking","Robotics",
+    "AI","Startups","Entrepreneurship","Sketching","Poetry",
+    "Blogging","Volunteering","History","Psychology",
+    "Meditation","Philosophy","Drawing","Animation",
+    "Programming","Web Development","UI/UX","Chess",
+    "Piano","Guitar","Health","Running","Culture","Languages"
+  ];
 
-const orientations = ["horizontal", "vertical", "diagonal"];
-const placedPositions = [];
-
-function isOverlapping(x, y, width, height) {
-  for (let pos of placedPositions) {
-    if (
-      x < pos.x + pos.width &&
-      x + width > pos.x &&
-      y < pos.y + pos.height &&
-      y + height > pos.y
-    ) {
-      return true;
-    }
+  // Create many words (hundreds)
+  let words = [];
+  for (let i = 0; i < 8; i++) {
+    words = words.concat(baseWords);
   }
-  return false;
-}
 
-function placeWords() {
-  hobbies.forEach(word => {
+  const orientations = ["horizontal", "vertical", "diagonal"];
+  const placed = [];
+
+  function overlaps(x, y, w, h) {
+    return placed.some(p =>
+      x < p.x + p.w &&
+      x + w > p.x &&
+      y < p.y + p.h &&
+      y + h > p.y
+    );
+  }
+
+  words.forEach(word => {
     const span = document.createElement("span");
-    span.classList.add("word");
+    span.className = "word";
     span.textContent = word;
 
     const orientation = orientations[Math.floor(Math.random() * orientations.length)];
@@ -82,22 +80,21 @@ function placeWords() {
     document.body.appendChild(span);
 
     const rect = span.getBoundingClientRect();
-    let x, y, tries = 0;
+    let x, y, attempts = 0;
 
     do {
       x = Math.random() * (window.innerWidth - rect.width);
       y = Math.random() * (window.innerHeight - rect.height);
-      tries++;
-    } while (isOverlapping(x, y, rect.width, rect.height) && tries < 100);
+      attempts++;
+    } while (overlaps(x, y, rect.width, rect.height) && attempts < 100);
 
     span.style.left = x + "px";
     span.style.top = y + "px";
 
-    placedPositions.push({ x, y, width: rect.width, height: rect.height });
+    placed.push({ x: x, y: y, w: rect.width, h: rect.height });
   });
-}
 
-placeWords();
+});
 </script>
 
 </body>
