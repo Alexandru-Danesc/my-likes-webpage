@@ -5,8 +5,10 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Passions</title>
 
-<!-- Splashy fun font -->
+<!-- Splashy fun font for columns -->
 <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
+<!-- Handwritten calligraphy font for center -->
+<link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
 body {
@@ -14,31 +16,67 @@ body {
   padding: 40px;
   background: white;
   font-family: 'Luckiest Guy', cursive;
+  position: relative;
 }
 
+/* Central white square */
+.square {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 600px;
+  height: 600px;
+  background: white;
+  transform: translate(-50%, -50%);
+  box-shadow: 0 0 20px rgba(0,0,0,0.1);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1;
+  border-radius: 15px;
+}
+
+/* Centered calligraphy text */
+.square h1 {
+  font-family: 'Great Vibes', cursive;
+  font-size: 64px;
+  color: #ff4d00;
+  margin: 0;
+}
+
+/* Word container */
 .container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 15px 20px; /* smaller vertical gap */
+  gap: 15px 20px;
+  position: relative;
+  z-index: 0;
 }
 
+/* Word style */
 .word {
   font-size: 22px;
-  text-align: left; /* align words to left */
+  text-align: left;
+  position: relative;
 }
 
 /* Color classes */
-.orange-grey { color: #d97742; }   /* muted orange */
-.green-grey { color: #4f7942; }    /* muted green */
-.blue-grey  { color: #607d8b; }    /* blue-grey */
-.greyish    { color: #6b6b6b; }    /* neutral grey */
+.orange-grey { color: #d97742; }   
+.green-grey { color: #4f7942; }    
+.blue-grey  { color: #607d8b; }    
+.greyish    { color: #6b6b6b; }    
 </style>
 </head>
 <body>
 
+<div class="square">
+  <h1>I like</h1>
+</div>
+
 <div class="container" id="container"></div>
 
 <script>
+// Words array
 const words = [
 "Coding","Programming","Web Development","App Development","Software Engineering",
 "Artificial Intelligence","Machine Learning","Robotics","Cybersecurity","Data Science",
@@ -65,19 +103,48 @@ const words = [
 // Color options
 const colors = ["orange-grey","green-grey","blue-grey","greyish"];
 
+// Square boundaries
+const square = document.querySelector('.square');
+const squareRect = square.getBoundingClientRect();
+
+// Container
 const container = document.getElementById("container");
 
 words.forEach(word => {
   const div = document.createElement("div");
   div.className = "word";
+  div.textContent = word;
 
-  // Random color class
+  // Random color
   const colorClass = colors[Math.floor(Math.random() * colors.length)];
   div.classList.add(colorClass);
 
-  div.textContent = word;
   container.appendChild(div);
 });
+
+// Function to shift words that overlap the square
+function adjustWords() {
+  const squareBounds = square.getBoundingClientRect();
+  const wordElements = document.querySelectorAll('.word');
+
+  wordElements.forEach(word => {
+    const wordRect = word.getBoundingClientRect();
+    // If overlaps square, push it left or right
+    if (
+      wordRect.left < squareBounds.right &&
+      wordRect.right > squareBounds.left &&
+      wordRect.top < squareBounds.bottom &&
+      wordRect.bottom > squareBounds.top
+    ) {
+      word.style.position = "relative";
+      word.style.left = "-620px"; // shift far left to avoid the square
+    }
+  });
+}
+
+// Adjust after DOM loads
+window.onload = adjustWords;
+window.onresize = adjustWords;
 </script>
 
 </body>
