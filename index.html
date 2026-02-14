@@ -22,7 +22,7 @@ body {
 .main-container {
   display: flex;
   width: 100%;
-  max-width: 1400px;
+  max-width: 1600px;
   justify-content: center;
   position: relative;
   gap: 40px;
@@ -52,17 +52,17 @@ body {
   margin: 0;
 }
 
-/* Side container with 2 columns */
+/* Side container for multiple columns (row direction) */
 .side-container {
-  display: flex;          /* row direction for 2 columns */
-  gap: 20px;              /* gap between the two columns */
+  display: flex;
+  gap: 20px; /* gap between each column */
 }
 
 /* Individual column */
 .column {
   display: flex;
   flex-direction: column;
-  gap: 8px;  /* vertical spacing between words */
+  gap: 8px; /* vertical spacing between words */
 }
 
 /* Word style */
@@ -83,16 +83,18 @@ body {
 
 <div class="main-container">
 
-  <!-- Left side: two columns -->
+  <!-- Left side: 3 columns -->
   <div class="side-container" style="margin-right: 170px;"> <!-- space to avoid square -->
     <div class="column" id="leftCol1"></div>
     <div class="column" id="leftCol2"></div>
+    <div class="column" id="leftCol3"></div>
   </div>
 
-  <!-- Right side: two columns -->
+  <!-- Right side: 3 columns -->
   <div class="side-container" style="margin-left: 170px;"> <!-- space to avoid square -->
     <div class="column" id="rightCol1"></div>
     <div class="column" id="rightCol2"></div>
+    <div class="column" id="rightCol3"></div>
   </div>
 
 </div>
@@ -130,24 +132,31 @@ const words = [
 // Colors array
 const colors = ["orange-grey","green-grey","blue-grey","greyish","red-grey"];
 
-// Get column elements
-const leftCols = [document.getElementById('leftCol1'), document.getElementById('leftCol2')];
-const rightCols = [document.getElementById('rightCol1'), document.getElementById('rightCol2')];
+// Columns
+const leftCols = [
+  document.getElementById('leftCol1'),
+  document.getElementById('leftCol2'),
+  document.getElementById('leftCol3')
+];
+const rightCols = [
+  document.getElementById('rightCol1'),
+  document.getElementById('rightCol2'),
+  document.getElementById('rightCol3')
+];
 
-// Distribute words evenly into 4 columns
+// Distribute words evenly among 6 columns
 words.forEach((word, index) => {
   const div = document.createElement('div');
   div.className = "word";
   div.textContent = word;
-
+  
   // Random color
   div.classList.add(colors[Math.floor(Math.random() * colors.length)]);
-
-  // Alternate columns: 0,1 = left; 2,3 = right
-  if (index % 4 === 0) leftCols[0].appendChild(div);
-  else if (index % 4 === 1) leftCols[1].appendChild(div);
-  else if (index % 4 === 2) rightCols[0].appendChild(div);
-  else rightCols[1].appendChild(div);
+  
+  // Place words in order: 0,1,2 = left; 3,4,5 = right
+  const colIndex = index % 6;
+  if (colIndex < 3) leftCols[colIndex].appendChild(div);
+  else rightCols[colIndex - 3].appendChild(div);
 });
 </script>
 
