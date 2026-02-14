@@ -58,11 +58,17 @@ body {
   gap: 20px; /* gap between each column */
 }
 
+/* Right side: align columns to right */
+.right-side {
+  justify-content: flex-end;
+}
+
 /* Individual column */
 .column {
   display: flex;
   flex-direction: column;
   gap: 8px; /* vertical spacing between words */
+  max-width: 200px; /* optional for readability */
 }
 
 /* Word style */
@@ -91,7 +97,7 @@ body {
   </div>
 
   <!-- Right side: 3 columns -->
-  <div class="side-container" style="margin-left: 170px;"> <!-- space to avoid square -->
+  <div class="side-container right-side" style="margin-left: 170px;"> <!-- align right -->
     <div class="column" id="rightCol1"></div>
     <div class="column" id="rightCol2"></div>
     <div class="column" id="rightCol3"></div>
@@ -105,7 +111,7 @@ body {
 </div>
 
 <script>
-// Words array
+// Expanded words array
 const words = [
 "Coding","Programming","Web Development","App Development","Software Engineering",
 "Artificial Intelligence","Machine Learning","Robotics","Cybersecurity","Data Science",
@@ -126,7 +132,12 @@ const words = [
 "Cooking","Baking","Nutrition","Gardening","DIY Projects",
 "Blogging","Podcasting","Journaling","Mindfulness","Self Improvement",
 "Leadership","Entrepreneurship","Networking","Innovation","Sustainability",
-"Minimalism","Volunteering","Mentoring","Problem Solving","Creativity"
+"Minimalism","Volunteering","Mentoring","Problem Solving","Creativity",
+"Photography","Calligraphy","Origami","Chess","Board Games","Gardening",
+"Yoga","Hiking","Running","Swimming","Travel","Languages","History",
+"Philosophy","Cooking","Baking","Music","Piano","Guitar","Singing","Painting",
+"Sketching","Drawing","Filmmaking","Podcasting","Blogging","Science","Physics",
+"Mathematics","Astronomy","Robotics","AI","Machine Learning","UI Design","UX Design"
 ];
 
 // Colors array
@@ -149,11 +160,11 @@ words.forEach((word, index) => {
   const div = document.createElement('div');
   div.className = "word";
   div.textContent = word;
-  
+
   // Random color
   div.classList.add(colors[Math.floor(Math.random() * colors.length)]);
-  
-  // Place words in order: 0,1,2 = left; 3,4,5 = right
+
+  // Place words: 0,1,2 = left; 3,4,5 = right
   const colIndex = index % 6;
   if (colIndex < 3) leftCols[colIndex].appendChild(div);
   else rightCols[colIndex - 3].appendChild(div);
