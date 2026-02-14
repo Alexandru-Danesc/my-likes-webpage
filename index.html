@@ -120,6 +120,22 @@ body {
     display: block; /* keep all columns visible but will merge in JS */
   }
 }
+  /* Mobile-only "I like" title above column */
+.mobile-title {
+  font-family: 'Great Vibes', cursive;
+  font-size: 48px;
+  color: #ff4d00;
+  text-align: center;
+  margin-bottom: 20px;
+  display: none; /* hidden by default */
+}
+
+@media (max-width: 768px) {
+  .mobile-title {
+    display: block; /* show on mobile */
+  }
+}
+
 </style>
 </head>
 <body>
