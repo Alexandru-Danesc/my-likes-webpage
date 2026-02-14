@@ -5,119 +5,81 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Passions</title>
 
+<!-- Keep the same splashy font -->
 <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 
 <style>
 body {
   margin: 0;
+  padding: 60px;
   background: white;
   font-family: 'Luckiest Guy', cursive;
-  position: relative;
-  height: 4500px;
+}
+
+.container {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 40px 20px;
 }
 
 .word {
-  position: absolute;
   color: #ff4d00;
-  white-space: nowrap;
-  user-select: none;
+  font-size: 24px;
+  text-align: center;
 }
 </style>
 </head>
 <body>
 
+<div class="container" id="wordContainer"></div>
+
 <script>
 
-// Large unique word collection
 const words = [
-"Coding","Programming","Design","Art","Photography","Travel","Adventure",
-"Creativity","Innovation","Technology","AI","Robotics","Cybersecurity",
-"Data","Startups","Entrepreneurship","Web","Apps","Games","Animation",
-"Music","Piano","Guitar","Singing","Poetry","Writing","Storytelling",
-"Reading","Philosophy","Psychology","Astronomy","Science","Physics",
-"Mathematics","History","Culture","Languages","Fitness","Running",
-"Swimming","Cycling","Hiking","Climbing","Yoga","Meditation",
-"Basketball","Football","Tennis","Cooking","Baking","Nutrition",
-"Gardening","DIY","Blogging","Podcasting","Learning","Teaching",
-"Leadership","Strategy","Exploring","Camping","Surfing","Skateboarding",
-"Filmmaking","Editing","Drawing","Sketching","Painting","Digital Art",
-"UI","UX","Cloud","Blockchain","Automation","Electronics",
-"3D Printing","Virtual Reality","Augmented Reality","Open Source",
-"Networking","Public Speaking","Research","Critical Thinking",
-"Debating","Problem Solving","Sustainability","Minimalism",
-"Mindfulness","Journaling","Self Growth","Mentoring","Volunteering",
-"Neuroscience","Economics","Linguistics","Dancing","Martial Arts",
-"Skiing","Space","Nature","Wildlife","Ocean","Mountains",
-"Exploration","Discovery","Future","Vision","Dreaming",
-"Building","Creating","Inventing","Designing","Imagining"
+"Coding","Programming","Web Development","App Development","Design",
+"UI","UX","Graphic Design","Digital Art","Photography",
+"Filmmaking","Animation","Music","Piano","Guitar",
+"Singing","Songwriting","Poetry","Creative Writing","Storytelling",
+"Reading","Philosophy","Psychology","Astronomy","Physics",
+"Mathematics","History","Economics","Political Science","Linguistics",
+"Neuroscience","AI","Machine Learning","Robotics","Cybersecurity",
+"Blockchain","Cloud Computing","Automation","Data Science","Open Source",
+"Startups","Entrepreneurship","Leadership","Public Speaking","Debating",
+"Critical Thinking","Research","Innovation","Strategy","Problem Solving",
+"Fitness","Running","Swimming","Cycling","Hiking",
+"Climbing","Yoga","Meditation","Martial Arts","Dancing",
+"Basketball","Football","Tennis","Skateboarding","Surfing",
+"Skiing","Travel","Adventure","Exploration","Camping",
+"Nature","Wildlife","Ocean","Mountains","Space",
+"Gardening","Cooking","Baking","Nutrition","DIY",
+"Blogging","Podcasting","Journaling","Mindfulness","Self Growth",
+"Volunteering","Mentoring","Teaching","Learning","Culture",
+"Languages","Sustainability","Minimalism","Networking","Inventing",
+"Building","Creating","Dreaming","Imagining","Designing"
 ];
 
-let wordIndex = 0;
+// Duplicate safely ONLY if needed to reach hundreds — but without repeating visually
+// We create variations like "Advanced Coding", "Modern Coding", etc.
 
-const clustersAcross = 3;
-const clustersDown = 6;
+const prefixes = ["Advanced","Modern","Creative","Strategic","Innovative","Dynamic","Digital","Future","Experimental","Global"];
 
-const clusterWidth = window.innerWidth / clustersAcross;
-const clusterHeight = 650; // tight vertical stacking
+let expandedWords = [];
 
-function placeWord(text, x, y, rotation, size) {
-  const span = document.createElement("span");
-  span.className = "word";
-  span.textContent = text;
-  span.style.left = x + "px";
-  span.style.top = y + "px";
-  span.style.transform = "rotate(" + rotation + "deg)";
-  span.style.fontSize = size + "px";
-  document.body.appendChild(span);
-}
+words.forEach(word => {
+  expandedWords.push(word);
+  prefixes.forEach(prefix => {
+    expandedWords.push(prefix + " " + word);
+  });
+});
 
-for (let row = 0; row < clustersDown; row++) {
-  for (let col = 0; col < clustersAcross; col++) {
+const container = document.getElementById("wordContainer");
 
-    let baseX = col * clusterWidth + 20;
-    let baseY = row * clusterHeight + 20;
-
-    // 10 HORIZONTAL
-    for (let i = 0; i < 10; i++) {
-      if (wordIndex >= words.length) break;
-
-      placeWord(
-        words[wordIndex++],
-        baseX + 10,
-        baseY + i * 35,
-        0,
-        22 + Math.random() * 8
-      );
-    }
-
-    // 10 VERTICAL
-    for (let i = 0; i < 10; i++) {
-      if (wordIndex >= words.length) break;
-
-      placeWord(
-        words[wordIndex++],
-        baseX + 300 + i * 25,
-        baseY + 20,
-        90,
-        22 + Math.random() * 8
-      );
-    }
-
-    // 10 INCLINED (kept in separate safe area so no overlap)
-    for (let i = 0; i < 10; i++) {
-      if (wordIndex >= words.length) break;
-
-      placeWord(
-        words[wordIndex++],
-        baseX + 120 + i * 20,
-        baseY + 400 + i * 25,
-        Math.random() * 50 - 25,
-        24 + Math.random() * 12
-      );
-    }
-
-  }
-}
+expandedWords.forEach(word => {
+  const div = document.createElement("div");
+  div.className = "word";
+  div.textContent = word;
+  container.appendChild(div);
+});
 
 </script>
 
