@@ -5,9 +5,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Passions</title>
 
-<!-- Splashy fun font for columns -->
+<!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
-<!-- Handwritten calligraphy font for center -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
 
 <style>
@@ -16,12 +15,20 @@ body {
   padding: 40px;
   background: white;
   font-family: 'Luckiest Guy', cursive;
+  display: flex;
+  justify-content: center;
+}
+
+.main-container {
+  display: flex;
+  width: 100%;
+  max-width: 1400px;
   position: relative;
 }
 
-/* Central white square */
+/* Fixed square in center */
 .square {
-  position: absolute;
+  position: fixed;
   top: 50%;
   left: 50%;
   width: 600px;
@@ -32,11 +39,10 @@ body {
   display: flex;
   justify-content: center;
   align-items: center;
-  z-index: 1;
+  z-index: 2;
   border-radius: 15px;
 }
 
-/* Centered calligraphy text */
 .square h1 {
   font-family: 'Great Vibes', cursive;
   font-size: 64px;
@@ -44,39 +50,59 @@ body {
   margin: 0;
 }
 
-/* Word container */
-.container {
-  display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  gap: 15px 20px;
-  position: relative;
-  z-index: 0;
+/* Columns container */
+.columns {
+  display: flex;
+  flex: 1;
+  justify-content: space-between;
+  gap: 40px;
 }
 
-/* Word style */
+/* Each column */
+.column {
+  display: flex;
+  flex-direction: column;
+  gap: 8px; /* smaller vertical spacing */
+}
+
+/* Word font & alignment */
 .word {
-  font-size: 22px;
+  font-family: 'Great Vibes', cursive; /* match square text */
+  font-size: 28px;
   text-align: left;
-  position: relative;
 }
 
-/* Color classes */
+/* Word colors */
 .orange-grey { color: #d97742; }   
-.green-grey { color: #4f7942; }    
-.blue-grey  { color: #607d8b; }    
-.greyish    { color: #6b6b6b; }    
+.green-grey  { color: #4f7942; }    
+.blue-grey   { color: #607d8b; }    
+.greyish     { color: #6b6b6b; }    
+.red-grey    { color: #a83232; }    
 </style>
 </head>
 <body>
 
-<div class="square">
-  <h1>I like</h1>
+<div class="main-container">
+  <!-- Left columns -->
+  <div class="columns" id="leftColumns">
+    <div class="column" id="leftCol1"></div>
+    <div class="column" id="leftCol2"></div>
+  </div>
+
+  <!-- Fixed center square -->
+  <div class="square">
+    <h1>I like</h1>
+  </div>
+
+  <!-- Right columns -->
+  <div class="columns" id="rightColumns">
+    <div class="column" id="rightCol1"></div>
+    <div class="column" id="rightCol2"></div>
+  </div>
 </div>
 
-<div class="container" id="container"></div>
-
 <script>
-// Words array
+// Words array (unique words)
 const words = [
 "Coding","Programming","Web Development","App Development","Software Engineering",
 "Artificial Intelligence","Machine Learning","Robotics","Cybersecurity","Data Science",
@@ -100,51 +126,33 @@ const words = [
 "Minimalism","Volunteering","Mentoring","Problem Solving","Creativity"
 ];
 
-// Color options
-const colors = ["orange-grey","green-grey","blue-grey","greyish"];
+// Colors array
+const colors = ["orange-grey","green-grey","blue-grey","greyish","red-grey"];
 
-// Square boundaries
-const square = document.querySelector('.square');
-const squareRect = square.getBoundingClientRect();
+// Function to distribute words to 4 columns
+function populateColumns() {
+  const leftCols = [document.getElementById('leftCol1'), document.getElementById('leftCol2')];
+  const rightCols = [document.getElementById('rightCol1'), document.getElementById('rightCol2')];
 
-// Container
-const container = document.getElementById("container");
+  for (let i = 0; i < words.length; i++) {
+    const wordDiv = document.createElement('div');
+    wordDiv.className = "word";
+    wordDiv.textContent = words[i];
 
-words.forEach(word => {
-  const div = document.createElement("div");
-  div.className = "word";
-  div.textContent = word;
+    // Random color
+    const color = colors[Math.floor(Math.random() * colors.length)];
+    wordDiv.classList.add(color);
 
-  // Random color
-  const colorClass = colors[Math.floor(Math.random() * colors.length)];
-  div.classList.add(colorClass);
-
-  container.appendChild(div);
-});
-
-// Function to shift words that overlap the square
-function adjustWords() {
-  const squareBounds = square.getBoundingClientRect();
-  const wordElements = document.querySelectorAll('.word');
-
-  wordElements.forEach(word => {
-    const wordRect = word.getBoundingClientRect();
-    // If overlaps square, push it left or right
-    if (
-      wordRect.left < squareBounds.right &&
-      wordRect.right > squareBounds.left &&
-      wordRect.top < squareBounds.bottom &&
-      wordRect.bottom > squareBounds.top
-    ) {
-      word.style.position = "relative";
-      word.style.left = "-620px"; // shift far left to avoid the square
-    }
-  });
+    // Alternate placing words in columns
+    if (i % 4 === 0) leftCols[0].appendChild(wordDiv);
+    else if (i % 4 === 1) leftCols[1].appendChild(wordDiv);
+    else if (i % 4 === 2) rightCols[0].appendChild(wordDiv);
+    else rightCols[1].appendChild(wordDiv);
+  }
 }
 
-// Adjust after DOM loads
-window.onload = adjustWords;
-window.onresize = adjustWords;
+// Populate on load
+populateColumns();
 </script>
 
 </body>
