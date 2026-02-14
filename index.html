@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>My Passions</title>
 
-<!-- Keep the same splashy font -->
 <link href="https://fonts.googleapis.com/css2?family=Luckiest+Guy&display=swap" rel="stylesheet">
 
 <style>
@@ -19,7 +18,7 @@ body {
 .container {
   display: grid;
   grid-template-columns: repeat(5, 1fr);
-  gap: 40px 20px;
+  gap: 35px 20px;
 }
 
 .word {
@@ -31,57 +30,119 @@ body {
 </head>
 <body>
 
-<div class="container" id="wordContainer"></div>
+<div class="container">
 
-<script>
+<!-- TECHNOLOGY -->
+<div class="word">Coding</div>
+<div class="word">Programming</div>
+<div class="word">Web Development</div>
+<div class="word">App Development</div>
+<div class="word">Software Engineering</div>
+<div class="word">Artificial Intelligence</div>
+<div class="word">Machine Learning</div>
+<div class="word">Robotics</div>
+<div class="word">Cybersecurity</div>
+<div class="word">Data Science</div>
+<div class="word">Cloud Computing</div>
+<div class="word">Blockchain</div>
+<div class="word">Automation</div>
+<div class="word">Game Development</div>
+<div class="word">UI Design</div>
+<div class="word">UX Design</div>
+<div class="word">Open Source</div>
+<div class="word">Electronics</div>
+<div class="word">3D Printing</div>
+<div class="word">Virtual Reality</div>
 
-const words = [
-"Coding","Programming","Web Development","App Development","Design",
-"UI","UX","Graphic Design","Digital Art","Photography",
-"Filmmaking","Animation","Music","Piano","Guitar",
-"Singing","Songwriting","Poetry","Creative Writing","Storytelling",
-"Reading","Philosophy","Psychology","Astronomy","Physics",
-"Mathematics","History","Economics","Political Science","Linguistics",
-"Neuroscience","AI","Machine Learning","Robotics","Cybersecurity",
-"Blockchain","Cloud Computing","Automation","Data Science","Open Source",
-"Startups","Entrepreneurship","Leadership","Public Speaking","Debating",
-"Critical Thinking","Research","Innovation","Strategy","Problem Solving",
-"Fitness","Running","Swimming","Cycling","Hiking",
-"Climbing","Yoga","Meditation","Martial Arts","Dancing",
-"Basketball","Football","Tennis","Skateboarding","Surfing",
-"Skiing","Travel","Adventure","Exploration","Camping",
-"Nature","Wildlife","Ocean","Mountains","Space",
-"Gardening","Cooking","Baking","Nutrition","DIY",
-"Blogging","Podcasting","Journaling","Mindfulness","Self Growth",
-"Volunteering","Mentoring","Teaching","Learning","Culture",
-"Languages","Sustainability","Minimalism","Networking","Inventing",
-"Building","Creating","Dreaming","Imagining","Designing"
-];
+<!-- CREATIVE -->
+<div class="word">Art</div>
+<div class="word">Drawing</div>
+<div class="word">Sketching</div>
+<div class="word">Painting</div>
+<div class="word">Digital Art</div>
+<div class="word">Photography</div>
+<div class="word">Filmmaking</div>
+<div class="word">Video Editing</div>
+<div class="word">Animation</div>
+<div class="word">Graphic Design</div>
+<div class="word">Creative Writing</div>
+<div class="word">Poetry</div>
+<div class="word">Storytelling</div>
+<div class="word">Music Production</div>
+<div class="word">Piano</div>
+<div class="word">Guitar</div>
+<div class="word">Singing</div>
+<div class="word">Songwriting</div>
+<div class="word">Fashion Design</div>
+<div class="word">Interior Design</div>
 
-// Duplicate safely ONLY if needed to reach hundreds — but without repeating visually
-// We create variations like "Advanced Coding", "Modern Coding", etc.
+<!-- INTELLECTUAL -->
+<div class="word">Reading</div>
+<div class="word">Philosophy</div>
+<div class="word">Psychology</div>
+<div class="word">Astronomy</div>
+<div class="word">Physics</div>
+<div class="word">Mathematics</div>
+<div class="word">History</div>
+<div class="word">Economics</div>
+<div class="word">Political Science</div>
+<div class="word">Linguistics</div>
+<div class="word">Neuroscience</div>
+<div class="word">Research</div>
+<div class="word">Critical Thinking</div>
+<div class="word">Public Speaking</div>
+<div class="word">Debating</div>
+<div class="word">Teaching</div>
+<div class="word">Learning</div>
+<div class="word">Languages</div>
+<div class="word">Cultural Studies</div>
+<div class="word">Strategy</div>
 
-const prefixes = ["Advanced","Modern","Creative","Strategic","Innovative","Dynamic","Digital","Future","Experimental","Global"];
+<!-- ACTIVE -->
+<div class="word">Fitness</div>
+<div class="word">Running</div>
+<div class="word">Swimming</div>
+<div class="word">Cycling</div>
+<div class="word">Hiking</div>
+<div class="word">Climbing</div>
+<div class="word">Basketball</div>
+<div class="word">Football</div>
+<div class="word">Tennis</div>
+<div class="word">Yoga</div>
+<div class="word">Meditation</div>
+<div class="word">Martial Arts</div>
+<div class="word">Skateboarding</div>
+<div class="word">Surfing</div>
+<div class="word">Skiing</div>
+<div class="word">Dancing</div>
+<div class="word">Travel</div>
+<div class="word">Adventure</div>
+<div class="word">Camping</div>
+<div class="word">Exploration</div>
 
-let expandedWords = [];
+<!-- LIFESTYLE -->
+<div class="word">Cooking</div>
+<div class="word">Baking</div>
+<div class="word">Nutrition</div>
+<div class="word">Gardening</div>
+<div class="word">DIY Projects</div>
+<div class="word">Blogging</div>
+<div class="word">Podcasting</div>
+<div class="word">Journaling</div>
+<div class="word">Mindfulness</div>
+<div class="word">Self Improvement</div>
+<div class="word">Leadership</div>
+<div class="word">Entrepreneurship</div>
+<div class="word">Networking</div>
+<div class="word">Innovation</div>
+<div class="word">Sustainability</div>
+<div class="word">Minimalism</div>
+<div class="word">Volunteering</div>
+<div class="word">Mentoring</div>
+<div class="word">Problem Solving</div>
+<div class="word">Creativity</div>
 
-words.forEach(word => {
-  expandedWords.push(word);
-  prefixes.forEach(prefix => {
-    expandedWords.push(prefix + " " + word);
-  });
-});
-
-const container = document.getElementById("wordContainer");
-
-expandedWords.forEach(word => {
-  const div = document.createElement("div");
-  div.className = "word";
-  div.textContent = word;
-  container.appendChild(div);
-});
-
-</script>
+</div>
 
 </body>
 </html>
