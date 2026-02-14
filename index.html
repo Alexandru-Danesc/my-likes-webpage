@@ -12,7 +12,7 @@
 <style>
 body {
   margin: 0;
-  padding: 40px;
+  padding: 20px;
   background: white;
   font-family: 'Cormorant Garamond', serif;
   display: flex;
@@ -52,23 +52,23 @@ body {
   margin: 0;
 }
 
-/* Side container for multiple columns (row direction) */
+/* Side container for multiple columns */
 .side-container {
   display: flex;
-  gap: 20px; /* gap between each column */
+  gap: 20px; /* gap between columns */
 }
 
-/* Right side: align columns to right */
+/* Right side aligned right */
 .right-side {
   justify-content: flex-end;
 }
 
-/* Individual column */
+/* Column styling */
 .column {
   display: flex;
   flex-direction: column;
-  gap: 8px; /* vertical spacing between words */
-  max-width: 200px; /* optional for readability */
+  gap: 8px;
+  max-width: 200px;
 }
 
 /* Word style */
@@ -83,6 +83,35 @@ body {
 .blue-grey   { color: #607d8b; }    
 .greyish     { color: #6b6b6b; }    
 .red-grey    { color: #a83232; }    
+
+/* --------------------------- */
+/* MOBILE RESPONSIVE STYLES */
+@media (max-width: 768px) {
+  .square {
+    display: none; /* hide square */
+  }
+  
+  .main-container {
+    flex-direction: column;
+    gap: 20px;
+    align-items: center;
+  }
+
+  .side-container {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .column {
+    max-width: 100%;
+  }
+
+  /* Merge all columns into a single column visually */
+  #leftCol1, #leftCol2, #leftCol3,
+  #rightCol1, #rightCol2, #rightCol3 {
+    width: 100%;
+  }
+}
 </style>
 </head>
 <body>
@@ -90,14 +119,14 @@ body {
 <div class="main-container">
 
   <!-- Left side: 3 columns -->
-  <div class="side-container" style="margin-right: 170px;"> <!-- space to avoid square -->
+  <div class="side-container" style="margin-right: 170px;">
     <div class="column" id="leftCol1"></div>
     <div class="column" id="leftCol2"></div>
     <div class="column" id="leftCol3"></div>
   </div>
 
   <!-- Right side: 3 columns -->
-  <div class="side-container right-side" style="margin-left: 170px;"> <!-- align right -->
+  <div class="side-container right-side" style="margin-left: 170px;">
     <div class="column" id="rightCol1"></div>
     <div class="column" id="rightCol2"></div>
     <div class="column" id="rightCol3"></div>
@@ -160,10 +189,10 @@ words.forEach((word, index) => {
   const div = document.createElement('div');
   div.className = "word";
   div.textContent = word;
-
+  
   // Random color
   div.classList.add(colors[Math.floor(Math.random() * colors.length)]);
-
+  
   // Place words: 0,1,2 = left; 3,4,5 = right
   const colIndex = index % 6;
   if (colIndex < 3) leftCols[colIndex].appendChild(div);
