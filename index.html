@@ -120,11 +120,17 @@ body {
   }
 
   .column {
-    max-width: 92%;
-    margin: 0 auto;
-    text-align: justify;
-    text-justify: inter-word;
-  }
+  max-width: 92%;
+  margin: 0 auto;
+  display: block;              /* remove flex */
+  text-align: justify;         /* justify text */
+}
+
+.word {
+  display: inline-block;       /* allow wrapping */
+  margin: 6px 6px;
+}
+
 
   .mobile-title {
     display: block;
