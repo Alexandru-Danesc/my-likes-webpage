@@ -52,87 +52,72 @@ body {
   margin: 0;
 }
 
-/* Side container for multiple columns */
+/* Side container */
 .side-container {
   display: flex;
   gap: 20px;
 }
 
-/* Right side aligned right */
 .right-side {
   justify-content: flex-end;
 }
 
-/* Column styling */
 .column {
   display: flex;
   flex-direction: column;
-  gap: 8px; /* vertical spacing */
+  gap: 10px;
 }
 
-/* Right columns text aligned right */
 .right-column {
   text-align: right;
 }
 
 /* Word style */
 .word {
-  font-family: 'Cormorant Garamond', serif;
   font-size: 22px;
+  border: 1px solid #cccccc;
+  padding: 6px 10px;
+  border-radius: 4px;
+  display: inline-block;
+  background: white;
+  transition: all 0.3s ease;
+  cursor: pointer;
+}
+
+.word:hover {
+  transform: translateY(-4px);
+  box-shadow: 0 8px 15px rgba(0,0,0,0.15);
+  border-color: #ff4d00;
 }
 
 /* Colors */
-.orange-grey { color: #d97742; }   
-.green-grey  { color: #4f7942; }    
-.blue-grey   { color: #607d8b; }    
-.greyish     { color: #6b6b6b; }    
-.red-grey    { color: #a83232; }    
+.orange-grey { color: #d97742; }
+.green-grey  { color: #4f7942; }
+.blue-grey   { color: #607d8b; }
+.greyish     { color: #6b6b6b; }
+.red-grey    { color: #a83232; }
 
-/* Mobile-only "Îmi plac" title above column */
-.mobile-title {
-  font-family: 'Great Vibes', cursive;
-  font-size: 48px;
-  color: #ff4d00;
-  text-align: center;
-  margin-bottom: 20px;
-  display: none; /* hidden by default */
-}
-
-/* --------------------------- */
-/* MOBILE RESPONSIVE STYLES */
+/* Mobile */
 @media (max-width: 768px) {
+
   .square {
-    display: none; /* hide square */
+    display: none;
   }
-  
+
   .main-container {
     flex-direction: column;
     align-items: center;
-    gap: 20px;
   }
 
   .side-container {
     flex-direction: column;
-    gap: 0;
     align-items: center;
   }
 
-  /* Merge all columns into a single column on mobile */
   .column {
-    max-width: 90%;
-    text-align: justify; /* justified text */
-    margin: 0 auto;      /* center the column */
-  }
-
-  /* Show mobile title */
-  .mobile-title {
-    display: block;
-  }
-
-  /* Show all columns for merging in JS */
-  #leftCol1, #leftCol2, #leftCol3,
-  #rightCol1, #rightCol2, #rightCol3 {
-    display: block;
+    width: 100%;
+    max-width: 500px;
+    text-align: center;
   }
 }
 </style>
@@ -141,14 +126,12 @@ body {
 
 <div class="main-container">
 
-  <!-- Left side: 3 columns -->
   <div class="side-container" style="margin-right: 170px;">
     <div class="column" id="leftCol1"></div>
     <div class="column" id="leftCol2"></div>
     <div class="column" id="leftCol3"></div>
   </div>
 
-  <!-- Right side: 3 columns -->
   <div class="side-container right-side" style="margin-left: 170px;">
     <div class="column right-column" id="rightCol1"></div>
     <div class="column right-column" id="rightCol2"></div>
@@ -157,82 +140,58 @@ body {
 
 </div>
 
-<!-- Fixed center square -->
 <div class="square">
-  <h1>Îmi plac</h1>
+  <h1>I like</h1>
 </div>
 
 <script>
-// Words array
 const words = [
-"Gnoseologia","Scara lui Ioan Scărarul","Demonstrațiile matematice","A vedea esențialul","Principiile fizicii",
-  "Berea neagră","Zilele obișnuite","Zilele de sărbătoare","Cărțile vechi","Cărțile clare","Să scriu jurnale de impresii"
+"Coding","Programming","Web Development","App Development","Software Engineering",
+"Artificial Intelligence","Machine Learning","Robotics","Cybersecurity","Data Science",
+"Cloud Computing","Blockchain","Automation","Game Development","UI Design",
+"UX Design","Open Source","Electronics","3D Printing","Virtual Reality",
+"Art","Drawing","Sketching","Painting","Digital Art",
+"Photography","Filmmaking","Video Editing","Animation","Graphic Design",
+"Creative Writing","Poetry","Storytelling","Music Production","Piano",
+"Guitar","Singing","Songwriting","Fashion Design","Interior Design",
+"Reading","Philosophy","Psychology","Astronomy","Physics",
+"Mathematics","History","Economics","Political Science","Linguistics",
+"Neuroscience","Research","Critical Thinking","Public Speaking","Debating",
+"Teaching","Learning","Languages","Cultural Studies","Strategy",
+"Fitness","Running","Swimming","Cycling","Hiking",
+"Climbing","Basketball","Football","Tennis","Yoga",
+"Meditation","Martial Arts","Skateboarding","Surfing","Skiing",
+"Dancing","Travel","Adventure","Camping","Exploration",
+"Cooking","Baking","Nutrition","Gardening","DIY Projects"
 ];
 
-// Colors array
 const colors = ["orange-grey","green-grey","blue-grey","greyish","red-grey"];
 
-// Columns
 const leftCols = [
   document.getElementById('leftCol1'),
   document.getElementById('leftCol2'),
   document.getElementById('leftCol3')
 ];
+
 const rightCols = [
   document.getElementById('rightCol1'),
   document.getElementById('rightCol2'),
   document.getElementById('rightCol3')
 ];
 
-// Distribute words evenly among 6 columns
+const allColumns = [...leftCols, ...rightCols];
+
+// Calculate how many items per column
+const itemsPerColumn = Math.ceil(words.length / allColumns.length);
+
 words.forEach((word, index) => {
   const div = document.createElement('div');
   div.className = "word";
   div.textContent = word;
-  
-  // Random color
   div.classList.add(colors[Math.floor(Math.random() * colors.length)]);
-  
-  // Place words: 0,1,2 = left; 3,4,5 = right
-  const colIndex = index % 6;
-  if (colIndex < 3) leftCols[colIndex].appendChild(div);
-  else rightCols[colIndex - 3].appendChild(div);
-});
 
-// Merge all columns into one on mobile and add mobile title
-function mergeColumnsMobile() {
-  if (window.innerWidth <= 768) {
-    const mainContainer = document.querySelector('.main-container');
-
-    // Mobile title
-    const mobileTitle = document.createElement('div');
-    mobileTitle.className = 'mobile-title';
-    mobileTitle.textContent = 'Îmi plac';
-    mainContainer.appendChild(mobileTitle);
-
-    // Merged column
-    const mergedColumn = document.createElement('div');
-    mergedColumn.className = "column";
-    mergedColumn.style.textAlign = "justify";
-    
-    const allColumns = [...leftCols, ...rightCols];
-    allColumns.forEach(col => {
-      while (col.firstChild) {
-        mergedColumn.appendChild(col.firstChild);
-      }
-      col.style.display = 'none';
-    });
-
-    mainContainer.appendChild(mergedColumn);
-  }
-}
-
-// Run on load
-mergeColumnsMobile();
-
-// Run on resize
-window.addEventListener('resize', () => {
-  location.reload(); // simple way to re-run merge on resize
+  const columnIndex = Math.floor(index / itemsPerColumn);
+  allColumns[columnIndex].appendChild(div);
 });
 </script>
 
