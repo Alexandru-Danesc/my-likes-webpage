@@ -209,16 +209,16 @@ const rightCols = [
 ];
 
 const allColumns = [...leftCols, ...rightCols];
-
-// Calculate number of words per column (approx)
 const itemsPerColumn = Math.ceil(words.length / allColumns.length);
 
 words.forEach((word, index) => {
   const div = document.createElement('div');
   div.className = "word";
   div.textContent = word;
+
+  // Assign color once
   div.classList.add(colors[Math.floor(Math.random() * colors.length)]);
-  
+
   // Sequential column filling
   const colIndex = Math.floor(index / itemsPerColumn);
   allColumns[colIndex].appendChild(div);
@@ -249,9 +249,7 @@ function mergeColumnsMobile() {
 
 mergeColumnsMobile();
 
-window.addEventListener('resize', () => {
-  location.reload();
-});
+
 </script>
 
 </body>
