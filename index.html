@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>My Likes/title>
+<title>My Likes</title>
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&display=swap" rel="stylesheet">
@@ -52,7 +52,7 @@ body {
   margin: 0;
 }
 
-/* Side container for multiple columns */
+/* Side containers */
 .side-container {
   display: flex;
   gap: 20px;
@@ -72,9 +72,8 @@ body {
   text-align: right;
 }
 
-/* Word style with rectangle */
+/* Word style (desktop rectangles) */
 .word {
-  font-family: 'Cormorant Garamond', serif;
   font-size: 22px;
   border: 1px solid #cccccc;
   padding: 6px 10px;
@@ -113,32 +112,30 @@ body {
     align-items: center;
   }
 
-  .side-container {
-    flex-direction: column;
-    gap: 0;
-    align-items: center;
-  }
-
-  .column {
-  max-width: 92%;
-  margin: 0 auto;
-  display: block;              /* remove flex */
-  text-align: justify;         /* justify text */
-}
-
-.word {
-  display: inline-block;       /* allow wrapping */
-  margin: 6px 6px;
-}
-
-
   .mobile-title {
     display: block;
   }
 
-  #leftCol1, #leftCol2, #leftCol3,
-  #rightCol1, #rightCol2, #rightCol3 {
+  .column {
+    max-width: 90%;
+    margin: 0 auto;
     display: block;
+    text-align: justify;
+  }
+
+  .word {
+    display: inline;
+    border: none;
+    padding: 0;
+    margin: 0 6px 0 0;
+    background: none;
+    border-radius: 0;
+  }
+
+  .side-container {
+    flex-direction: column;
+    align-items: center;
+    gap: 0;
   }
 }
 </style>
@@ -167,8 +164,26 @@ body {
 
 <script>
 const words = [
-"Gnoseologia","Scara lui Ioan Scărarul","Principiile fizicii - să văd esențialul lumii fizice","Demonstrațiile matematice", "Semnificațiile matematice", "Semnificațiile formulelor",
-  "Simțirea calitativă a fenomenelor fizice", "Să observ copacii","Copacii", "Mersul lung cu tramvaiul","Cărțile vechi scrise cu mult suflet", "Articolele de cercetare simple și uimitoare"
+"Gnoseologia",
+"Scara lui Ioan Scărarul",
+"Principiile fizicii - să văd esențialul lumii fizice",
+"Demonstrațiile matematice",
+"Semnificațiile matematice",
+"Semnificațiile formulelor",
+"Simțirea calitativă a fenomenelor fizice",
+"Să observ copacii",
+"Copacii",
+"Mersul lung cu tramvaiul",
+"Cărțile vechi scrise cu mult suflet",
+"Articolele de cercetare simple și uimitoare",
+"Plimbările lungi",
+"Dialogurile profunde",
+"Liniștea dimineții",
+"Întrebările fundamentale",
+"Matematica pură",
+"Armonia naturii",
+"Scrisul de mână",
+"Gândirea clară"
 ];
 
 const colors = ["orange-grey","green-grey","blue-grey","greyish","red-grey"];
@@ -200,6 +215,8 @@ function mergeColumnsMobile() {
   if (window.innerWidth <= 768) {
     const mainContainer = document.querySelector('.main-container');
 
+    mainContainer.innerHTML = '';
+
     const mobileTitle = document.createElement('div');
     mobileTitle.className = 'mobile-title';
     mobileTitle.textContent = 'Îmi plac';
@@ -207,12 +224,9 @@ function mergeColumnsMobile() {
 
     const mergedColumn = document.createElement('div');
     mergedColumn.className = "column";
-    
-    [...leftCols, ...rightCols].forEach(col => {
-      while (col.firstChild) {
-        mergedColumn.appendChild(col.firstChild);
-      }
-      col.style.display = 'none';
+
+    document.querySelectorAll('.word').forEach(word => {
+      mergedColumn.appendChild(word);
     });
 
     mainContainer.appendChild(mergedColumn);
