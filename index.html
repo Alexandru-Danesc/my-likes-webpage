@@ -213,23 +213,31 @@ words.forEach((word, index) => {
 
 function mergeColumnsMobile() {
   if (window.innerWidth <= 768) {
-    const mainContainer = document.querySelector('.main-container');
 
-    mainContainer.innerHTML = '';
+    // Hide desktop layout
+    document.querySelectorAll('.side-container').forEach(el => {
+      el.style.display = 'none';
+    });
 
+    // Create mobile title
     const mobileTitle = document.createElement('div');
     mobileTitle.className = 'mobile-title';
     mobileTitle.textContent = 'Îmi plac';
-    mainContainer.appendChild(mobileTitle);
+    document.querySelector('.main-container').appendChild(mobileTitle);
 
+    // Create one single column
     const mergedColumn = document.createElement('div');
     mergedColumn.className = "column";
 
-    document.querySelectorAll('.word').forEach(word => {
-      mergedColumn.appendChild(word);
+    words.forEach(word => {
+      const div = document.createElement('span');
+      div.className = "word";
+      div.textContent = word + " ";
+      div.classList.add(colors[Math.floor(Math.random() * colors.length)]);
+      mergedColumn.appendChild(div);
     });
 
-    mainContainer.appendChild(mergedColumn);
+    document.querySelector('.main-container').appendChild(mergedColumn);
   }
 }
 
