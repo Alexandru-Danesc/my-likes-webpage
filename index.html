@@ -156,7 +156,7 @@ body {
 </div>
 
 <div class="square">
-  <h1>Îmi plac</h1>
+  <h1>I like</h1>
 </div>
 
 <script>
@@ -194,15 +194,20 @@ const rightCols = [
   document.getElementById('rightCol3')
 ];
 
+const allColumns = [...leftCols, ...rightCols];
+
+// Calculate number of words per column (approx)
+const itemsPerColumn = Math.ceil(words.length / allColumns.length);
+
 words.forEach((word, index) => {
   const div = document.createElement('div');
   div.className = "word";
   div.textContent = word;
   div.classList.add(colors[Math.floor(Math.random() * colors.length)]);
   
-  const colIndex = index % 6;
-  if (colIndex < 3) leftCols[colIndex].appendChild(div);
-  else rightCols[colIndex - 3].appendChild(div);
+  // Sequential column filling
+  const colIndex = Math.floor(index / itemsPerColumn);
+  allColumns[colIndex].appendChild(div);
 });
 
 function mergeColumnsMobile() {
@@ -211,7 +216,7 @@ function mergeColumnsMobile() {
 
     const mobileTitle = document.createElement('div');
     mobileTitle.className = 'mobile-title';
-    mobileTitle.textContent = 'Îmi plac';
+    mobileTitle.textContent = 'I like';
     mainContainer.appendChild(mobileTitle);
 
     const mergedColumn = document.createElement('div');
