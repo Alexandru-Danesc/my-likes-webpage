@@ -213,38 +213,37 @@ words.forEach((word, index) => {
 
 function mergeColumnsMobile() {
   if (window.innerWidth <= 768) {
+    const mainContainer = document.querySelector('.main-container');
 
-    // Hide desktop layout
-    document.querySelectorAll('.side-container').forEach(el => {
-      el.style.display = 'none';
-    });
-
-    // Create mobile title
+    // Mobile title
     const mobileTitle = document.createElement('div');
     mobileTitle.className = 'mobile-title';
-    mobileTitle.textContent = 'Îmi plac';
-    document.querySelector('.main-container').appendChild(mobileTitle);
+    mobileTitle.textContent = 'I like';
+    mainContainer.appendChild(mobileTitle);
 
-    // Create one single column
+    // Merged column
     const mergedColumn = document.createElement('div');
     mergedColumn.className = "column";
-
-    words.forEach(word => {
-      const div = document.createElement('span');
-      div.className = "word";
-      div.textContent = word + " ";
-      div.classList.add(colors[Math.floor(Math.random() * colors.length)]);
-      mergedColumn.appendChild(div);
+    mergedColumn.style.textAlign = "justify";
+    
+    const allColumns = [...leftCols, ...rightCols];
+    allColumns.forEach(col => {
+      while (col.firstChild) {
+        mergedColumn.appendChild(col.firstChild);
+      }
+      col.style.display = 'none';
     });
 
-    document.querySelector('.main-container').appendChild(mergedColumn);
+    mainContainer.appendChild(mergedColumn);
   }
 }
 
+// Run on load
 mergeColumnsMobile();
 
+// Run on resize
 window.addEventListener('resize', () => {
-  location.reload();
+  location.reload(); // simple way to re-run merge on resize
 });
 </script>
 
